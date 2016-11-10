@@ -1,0 +1,3 @@
+[submodule "vendor/cranberry/core"]
+	path = vendor/cranberry/core
+	url = https://github.com/cranberry/core.git
