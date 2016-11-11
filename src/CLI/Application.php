@@ -89,7 +89,7 @@ class Application
 
 		/* Application root directory */
 		$this->dirApp = $dirApp;
-		
+
 		/* Default Command */
 		$this->defaultCommand = new Command\Command( 'default', 'A placeholder command', function(){ } );
 
@@ -427,7 +427,7 @@ OUTPUT;
 		{
 			if( !is_null( $commandName ) )
 			{
-				$command = $this->getCommand( $commandName );			
+				$command = $this->getCommand( $commandName );
 			}
 		}
 
