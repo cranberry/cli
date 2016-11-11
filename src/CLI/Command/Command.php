@@ -89,6 +89,11 @@ class Command
 	protected $usage='';
 
 	/**
+	 * @var boolean
+	 */
+	protected $useAsDefault=false;
+
+	/**
 	 * @param	string	$name
 	 * @param	string	$description
 	 * @param	mixed	$closure 		Closure, name of static function or [object, function] array
@@ -433,5 +438,18 @@ class Command
 	public function setUsage($usage)
 	{
 		$this->usage = $usage;
+	}
+	
+	/**
+	 * @param	boolean	$useAsDefault
+	 */
+	public function useAsApplicationDefault( $useAsDefault=null )
+	{
+		if( is_null( $useAsDefault ) )
+		{
+			return $this->useAsDefault;
+		}
+
+		$this->useAsDefault = $useAsDefault;
 	}
 }
