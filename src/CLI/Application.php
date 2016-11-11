@@ -125,7 +125,7 @@ class Application
 			throw new \BadFunctionCallException(sprintf
 			(
 				"Missing arguments for '%s': %s expected, %s given",
-				$name,
+				$command->getName(),
 				$rf->getNumberOfRequiredParameters(),
 				count($arguments)
 			));
