@@ -17,6 +17,26 @@ class Command
 	protected $aliases=[];
 
 	/**
+	 * @var	array
+	 */
+	protected $appCommands=[];
+
+	/**
+	 * @var	array
+	 */
+	protected $appExecutableOptions=[];
+
+	/**
+	 * @var	string
+	 */
+	protected $appName;
+
+	/**
+	 * @var string
+	 */
+	protected $appVersion;
+
+	/**
 	 * @var string
 	 */
 	protected $closure;
@@ -98,6 +118,38 @@ class Command
 	public function getAliases()
 	{
 		return $this->aliases;
+	}
+
+	/**
+	 * @return	array
+	 */
+	public function getApplicationCommands()
+	{
+		return $this->appCommands;
+	}
+
+	/**
+	 * @return	array
+	 */
+	public function getApplicationExecutableOptions()
+	{
+		return $this->appExecutableOptions;
+	}
+
+	/**
+	 * @return	string
+	 */
+	public function getApplicationName()
+	{
+		return $this->appName;
+	}
+
+	/**
+	 * @return	string
+	 */
+	public function getApplicationVersion()
+	{
+		return $this->appVersion;
 	}
 
 	/**
@@ -260,6 +312,38 @@ class Command
 	public function setAppDirectory( File\Directory $dirApp )
 	{
 		$this->dirApp = $dirApp;
+	}
+
+	/**
+	 * @param	array	$appCommands
+	 */
+	public function setApplicationCommands( array $appCommands )
+	{
+		$this->appCommands = $appCommands;
+	}
+	
+	/**
+	 * @param	array	$appExecutableOptions
+	 */
+	public function setApplicationExecutableOptions( array $appExecutableOptions )
+	{
+		$this->appExecutableOptions = $appExecutableOptions;
+	}
+
+	/**
+	 * @param	string	$appName
+	 */
+	public function setApplicationName( $appName )
+	{
+		$this->appName = $appName;
+	}
+	
+	/**
+	 * @param	string	$appVersion
+	 */
+	public function setApplicationVersion( $appVersion )
+	{
+		$this->appVersion = $appVersion;
 	}
 
 	/**
