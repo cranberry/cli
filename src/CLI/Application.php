@@ -453,6 +453,15 @@ OUTPUT;
 			$this->output->line( $outputContents );
 			$this->exit = 1;
 		}
+
+		// Incorrect options given
+		catch( \InvalidArgumentException $e )
+		{
+			$outputContents = sprintf( "%s: %s for command '%s'", $this->name, $e->getMessage(), $this->input->getCommand() );
+			$this->output->line( $outputContents );
+			$this->exit = 1;
+		}
+
 		// Exception thrown by command
 		catch( Command\CommandInvokedException $e )
 		{

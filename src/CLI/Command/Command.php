@@ -421,8 +421,12 @@ class Command
 		{
 			$this->options[$key] = $value;
 		}
+		else
+		{
+			throw new \InvalidArgumentException( "Unknown option '{$key}'" );
+		}
 	}
-	
+
 	/**
 	 * @param	Cranberry\CLI\Output\Output	$output
 	 * @return	void
