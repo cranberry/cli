@@ -37,6 +37,11 @@ class Application
 	protected $dirApp;
 
 	/**
+	 * @var array
+	 */
+	protected $executableOptions=[];
+
+	/**
 	 * @var int
 	 */
 	protected $exit=0;
@@ -84,11 +89,9 @@ class Application
 
 		/* Application root directory */
 		$this->dirApp = $dirApp;
-
-		/* Register default commands */
-		$commandHelp = new Command\Command( 'help', "Display help information about {$this->name}", [$this, 'commandHelp'] );
-		$commandHelp->setUsage( 'help <command>' );
-		$this->registerCommand( $commandHelp );
+		
+		/* Default Command */
+		$this->defaultCommand = new Command\Command( 'default', 'A placeholder command', function(){ } );
 
 		/* Cookie Controller */
 		$fileCookies = $this->dirApp->child( '.cookies' );
@@ -96,19 +99,12 @@ class Application
 	}
 
 	/**
-	 * @param	string	$name
+	 * @param	Cranberry\CLI\Command\Command	$command
 	 * @param	array	$arguments
 	 * @return	mixed
 	 */
-	public function callCommand($name, $arguments=[])
+	public function callCommand( Command\Command $command, $arguments=[] )
 	{
-		if(is_null($name))
-		{
-			throw new Command\InvalidCommandException( "No command specified", Command\InvalidCommandException::UNSPECIFIED );
-		}
-
-		$command = $this->getCommand($name);
-
 		// Attempt calling subcommand first
 		if(count($arguments) > 0)
 		{
@@ -141,6 +137,12 @@ class Application
 		}
 
 		$command->setAppDirectory( $this->dirApp );
+
+		$command->setApplicationCommands( $this->commands );
+		$command->setApplicationExecutableOptions( $this->executableOptions );
+		$command->setApplicationName( $this->name );
+		$command->setApplicationVersion( $this->version );
+
 		$command->setOutput( $this->output );
 
 		/* Lazy-load Cookies controller */
@@ -297,37 +299,17 @@ OUTPUT;
 	}
 
 	/**
-	 * @return	string
+	 * @param	string	$name
+	 * @return	Cranberry\CLI\Command\Command
 	 */
-	public function getUsage()
+	protected function getExecutableOption( $name )
 	{
-		$output = new Output\Output();
-
-		$output->line( "usage: {$this->name} [--version] <command> [<args>]" );
-		$output->line();
-		$output->line( "Commands are:" );
-
-		foreach($this->commands as $command)
+		if( !isset( $this->executableOptions[$name] ) )
 		{
-			$commandName = $command->getName();
-			$commandDescription = $command->getDescription();
-
-			if( $commandName == 'help' )
-			{
-				continue;
-			}
-
-			$commandString = new Format\String( $commandName );
-			$commandString->pad( 11 );
-
-			$line = "   {$commandString}{$commandDescription}";
-			$output->wrappedLine( $line, 14 );
+			throw new Command\InvalidCommandException( "Unknown option '{$name}'", Command\InvalidCommandException::UNDEFINED );
 		}
 
-		$output->line();
-		$output->indentedLine( "See '{$this->name} help <command>' to read about a specific command", 0 );
-
-		return $output->flush();
+		return $this->executableOptions[$name];
 	}
 
 	/**
@@ -360,16 +342,55 @@ OUTPUT;
 		{
 			$this->aliases[$alias] = $command->getName();
 		}
+
+		if( $command->useAsApplicationDefault() )
+		{
+			$this->defaultCommand = $command;
+		}
 	}
 
 	/**
-	 * Optionally specify a command to run if the application is run without arguments
-	 *
-	 * @return	void
+	 * @param	array	$commandFiles	An array of Cranberry\Core\File\File objects
 	 */
-	public function registerDefaultCommand( Command\Command $command )
+	public function registerCommandFiles( array $commandFiles )
 	{
-		$this->defaultCommand = $command;
+		foreach( $commandFiles as $commandFile )
+		{
+			$command = include_once( $commandFile );
+			if( $command instanceof Command\Command )
+			{
+				$this->registerCommand( $command );
+			}
+		}
+	}
+
+	/**
+	 * @param	Cranberry\Command\Command	$option
+	 */
+	public function registerExecutableOption( Command\ApplicationOption $option )
+	{
+		$this->executableOptions[$option->getName()] = $option;
+
+		if( $option->useAsApplicationDefault() )
+		{
+			$this->defaultCommand = $option;
+		}
+	}
+
+	/**
+	 * @param	array	$optionFiles	An array of Cranberry\Core\File\File objects
+	 */
+	public function registerExecutableOptionFiles( array $optionFiles )
+	{
+		foreach( $optionFiles as $optionFile )
+		{
+			$option = include_once( $optionFile );
+
+			if( $option instanceof Command\ApplicationOption )
+			{
+				$this->registerExecutableOption( $option );
+			}
+		}
 	}
 
 	/**
@@ -379,18 +400,43 @@ OUTPUT;
 	{
 		ksort($this->commands);
 
-		$options = $this->input->getApplicationOptions();
+		$commandName = $this->input->getCommand();
+		$command = $this->defaultCommand;
 
-		// --version
-		if( isset($options['version'] ) )
+		/*
+		 * Executable options (ex., '--version')
+		 */
+		$applicationOptionValues = $this->input->getApplicationOptions();
+
+		if( count( $applicationOptionValues ) > 0 )
 		{
-			$this->output->line( $this->commandVersion() );
-			return;
+			// The first option value set is our executable option candidate
+			$applicationOptionName = key( $applicationOptionValues );
+
+			if( isset( $this->executableOptions[$applicationOptionName] ) )
+			{
+				$command = $this->getExecutableOption( $applicationOptionName );
+				$command->setCommandName( $commandName );
+			}
 		}
 
+		/*
+		 * Command
+		 */
+		else
+		{
+			if( !is_null( $commandName ) )
+			{
+				$command = $this->getCommand( $commandName );			
+			}
+		}
+
+		/*
+		 * Run Command
+		 */
 		try
 		{
-			$this->callCommand( $this->input->getCommand(), $this->input->getCommandArguments() );
+			$this->callCommand( $command, $this->input->getCommandArguments() );
 		}
 
 		// Command not registered
@@ -421,7 +467,7 @@ OUTPUT;
 					}
 					else
 					{
-						$this->output->line( $this->getUsage() );
+						$this->output->string( $this->getUsage() );
 					}
 					break;
 			}
