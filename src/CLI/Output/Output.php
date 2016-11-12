@@ -116,14 +116,17 @@ class Output
 	}
 
 	/**
-	 * Alias for self::wrappedLine
-	 *
 	 * @param	string	$string		String to wrap
 	 * @param	number	$indent		Number of spaces used to indent subsequent lines
 	 * @return	void
 	 */
 	public function indentedLine( $string, $indent )
 	{
+		for( $i = 0; $i < $indent; $i++ )
+		{
+			$string = " {$string}";
+		}
+
 		$this->wrappedLine( $string, $indent );
 	}
 
