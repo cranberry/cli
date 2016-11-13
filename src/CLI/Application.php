@@ -141,12 +141,14 @@ class Application
 			$command->setOptionValue($key, $value);
 		}
 
-		$command->setAppDirectory( $this->dirApp );
+		/* App Mirror */
+		$appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
+		$appMirror->setDataDirectory( $this->dataDirectory );
+
+		$command->setApplicationMirror( $appMirror );
 
 		$command->setApplicationCommands( $this->commands );
 		$command->setApplicationExecutableOptions( $this->executableOptions );
-		$command->setApplicationName( $this->name );
-		$command->setApplicationVersion( $this->version );
 
 		$command->setOutput( $this->output );
 

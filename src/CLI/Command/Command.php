@@ -17,6 +17,11 @@ class Command
 	protected $aliases=[];
 
 	/**
+	 * @var	Cranberry\CLI\Application\Mirror
+	 */
+	public $app;
+
+	/**
 	 * @var	array
 	 */
 	protected $appCommands=[];
@@ -312,6 +317,15 @@ class Command
 	}
 
 	/**
+	 * @param	Cranberry\CLI\Application\Mirror	$appMirror
+	 */
+	public function setApplicationMirror( $appMirror )
+	{
+		$this->app = $appMirror;
+	}
+
+
+	/**
 	 * @param	Cranberry\Core\File\Directory	$dirApp
 	 */
 	public function setAppDirectory( File\Directory $dirApp )
@@ -326,29 +340,13 @@ class Command
 	{
 		$this->appCommands = $appCommands;
 	}
-	
+
 	/**
 	 * @param	array	$appExecutableOptions
 	 */
 	public function setApplicationExecutableOptions( array $appExecutableOptions )
 	{
 		$this->appExecutableOptions = $appExecutableOptions;
-	}
-
-	/**
-	 * @param	string	$appName
-	 */
-	public function setApplicationName( $appName )
-	{
-		$this->appName = $appName;
-	}
-	
-	/**
-	 * @param	string	$appVersion
-	 */
-	public function setApplicationVersion( $appVersion )
-	{
-		$this->appVersion = $appVersion;
 	}
 
 	/**
@@ -443,7 +441,7 @@ class Command
 	{
 		$this->usage = $usage;
 	}
-	
+
 	/**
 	 * @param	boolean	$useAsDefault
 	 */
