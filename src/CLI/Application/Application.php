@@ -145,6 +145,7 @@ class Application
 		/* App Mirror */
 		$appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
 		$appMirror->setDataDirectory( $this->dataDirectory );
+		$appMirror->registerCommands( $this->commands );
 
 		$command->setApplicationMirror( $appMirror );
 

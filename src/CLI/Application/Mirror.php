@@ -5,6 +5,7 @@
  */
 namespace Cranberry\CLI\Application;
 
+use Cranberry\CLI\Command;
 use Cranberry\Core\File;
 
 class Mirror
@@ -13,6 +14,11 @@ class Mirror
 	 * @var	Cranberry\Core\File\Directory
 	 */
 	public $applicationDirectory;
+
+	/**
+	 * @var	array
+	 */
+	public $commands=[];
 
 	/**
 	 * @var	Cranberry\Core\File\Directory
@@ -39,6 +45,23 @@ class Mirror
 		$this->name = $name;
 		$this->version = $version;
 		$this->applicationDirectory = $applicationDirectory;
+	}
+
+	/**
+	 * Register commands in Commands mirror
+	 *
+	 * @param	array	$commands
+	 */
+	public function registerCommands( array $commands )
+	{
+		foreach( $commands as $command )
+		{
+			$commandMirror = new Command\Mirror( $command->getName(), $command->getDescription() );
+			$commandMirror->setAliases( $command->getAliases() );
+			$commandMirror->setUsage( $command->getUsage() );
+
+			$this->commands[] = $commandMirror;
+		}
 	}
 
 	/**
