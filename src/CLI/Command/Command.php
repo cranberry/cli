@@ -103,14 +103,6 @@ class Command
 	/**
 	 * @return	array
 	 */
-	public function getApplicationCommands()
-	{
-		return $this->appCommands;
-	}
-
-	/**
-	 * @return	array
-	 */
 	public function getApplicationExecutableOptions()
 	{
 		return $this->appExecutableOptions;
