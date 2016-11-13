@@ -492,6 +492,14 @@ OUTPUT;
 	}
 
 	/**
+	 * @param	Cranberry\Core\File\Directory	$dataDirectory
+	 */
+	public function setDataDirectory( File\Directory $dataDirectory )
+	{
+		$this->dataDirectory = $dataDirectory;
+	}
+
+	/**
 	 * Terminate the application
 	 */
 	public function stop()
