@@ -17,6 +17,11 @@ class Application
 	protected $aliases=[];
 
 	/**
+	 * @var	Cranberry\Core\File\Directory
+	 */
+	protected $applicationDirectory;
+
+	/**
 	 * @var	array
 	 */
 	protected $cleanupActions=[];
@@ -72,7 +77,7 @@ class Application
 	 * @param	string							$phpMinimumVersion
 	 * @param	Cranberry\Core\File\Directory	$dirApp
 	 */
-	public function __construct( $name, $version, $phpMinimumVersion, File\Directory $dirApp )
+	public function __construct( $name, $version, $phpMinimumVersion, File\Directory $applicationDirectory )
 	{
 		$this->output  = new Output\Output();
 		$this->input   = new Input();
@@ -88,14 +93,14 @@ class Application
 		$this->version = $version;
 
 		/* Application root directory */
-		$this->dirApp = $dirApp;
+		$this->applicationDirectory = $applicationDirectory;
 
 		/* Default Command */
 		$this->defaultCommand = new Command\Command( 'default', 'A placeholder command', function(){ } );
 
 		/* Cookie Controller */
-		$fileCookies = $this->dirApp->child( '.cookies' );
 		$this->cookies = new Cookie( $fileCookies );
+		$fileCookies = $this->applicationDirectory->child( '.cookies' );
 	}
 
 	/**
@@ -171,7 +176,7 @@ class Application
 			   cleanup actions up to the current version just to be safe... */
 			if( version_compare( $cleanupVersion, $this->version, "<=" ) )
 			{
-				$filesToDelete = call_user_func( $cleanupAction, $this->dirApp );
+				$filesToDelete = call_user_func( $cleanupAction, $this->applicationDirectory );
 
 				/* Some cleanup actions might not require file deletion */
 				if( !is_array( $filesToDelete ) )
