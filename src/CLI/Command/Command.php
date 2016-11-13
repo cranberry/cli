@@ -22,11 +22,6 @@ class Command
 	public $app;
 
 	/**
-	 * @var	array
-	 */
-	protected $appExecutableOptions=[];
-
-	/**
 	 * @var string
 	 */
 	protected $closure;
@@ -93,14 +88,6 @@ class Command
 	public function getAliases()
 	{
 		return $this->aliases;
-	}
-
-	/**
-	 * @return	array
-	 */
-	public function getApplicationExecutableOptions()
-	{
-		return $this->appExecutableOptions;
 	}
 
 	/**
@@ -253,14 +240,6 @@ class Command
 	public function setApplicationMirror( $appMirror )
 	{
 		$this->app = $appMirror;
-	}
-
-	/**
-	 * @param	array	$appExecutableOptions
-	 */
-	public function setApplicationExecutableOptions( array $appExecutableOptions )
-	{
-		$this->appExecutableOptions = $appExecutableOptions;
 	}
 
 	/**

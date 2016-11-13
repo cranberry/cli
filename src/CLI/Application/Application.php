@@ -146,11 +146,10 @@ class Application
 		$appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
 		$appMirror->setDataDirectory( $this->dataDirectory );
 		$appMirror->registerCommands( $this->commands );
+		$appMirror->registerOptions( $this->executableOptions );
 
 		$command->setApplicationMirror( $appMirror );
 		$command->setOutput( $this->output );
-
-		$command->setApplicationExecutableOptions( $this->executableOptions );
 
 		/* Lazy-load Cookies controller */
 		$command->registerCookieController( $this->cookies );

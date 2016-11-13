@@ -31,6 +31,12 @@ class Mirror
 	public $name;
 
 	/**
+	 * @var	array
+	 */
+	public $options=[];
+
+
+	/**
 	 * @var	string
 	 */
 	public $version;
@@ -61,6 +67,28 @@ class Mirror
 			$commandMirror->setUsage( $command->getUsage() );
 
 			$this->commands[] = $commandMirror;
+		}
+	}
+
+	/**
+	 * Register options in Options mirror
+	 *
+	 * @param	array	$options
+	 */
+	public function registerOptions( array $options )
+	{
+		foreach( $options as $option )
+		{
+			$optionName = $option->getName();
+			$optionName = "-{$optionName}";
+
+			if( strlen( $optionName ) > 2 )
+			{
+				$optionName = "-{$optionName}";
+			}
+
+			$optionMirror = new Command\Mirror( $optionName, $option->getDescription() );
+			$this->options[] = $optionMirror;
 		}
 	}
 
