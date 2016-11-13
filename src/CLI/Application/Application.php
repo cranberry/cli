@@ -3,8 +3,9 @@
 /*
  * This file is part of Cranberry\CLI
  */
-namespace Cranberry\CLI;
+namespace Cranberry\CLI\Application;
 
+use Cranberry\CLI;
 use Cranberry\CLI\Command;
 use Cranberry\CLI\Output;
 use Cranberry\Core\File;
@@ -32,14 +33,14 @@ class Application
 	protected $commands=[];
 
 	/**
+	 * @var	Cranberry\Core\File\Directory
+	 */
+	protected $dataDirectory;
+
+	/**
 	 * @var Cranberry\CLI\Command\Command
 	 */
 	protected $defaultCommand;
-
-	/**
-	 * @var	Cranberry\Core\File\Directory
-	 */
-	protected $dirApp;
 
 	/**
 	 * @var array
@@ -62,9 +63,9 @@ class Application
 	protected $name;
 
 	/**
-	 * @var string
+	 * @var Cranberry\CLI\Output\Output
 	 */
-	protected $output='';
+	protected $output;
 
 	/**
 	 * @var string
@@ -80,7 +81,7 @@ class Application
 	public function __construct( $name, $version, $phpMinimumVersion, File\Directory $applicationDirectory )
 	{
 		$this->output  = new Output\Output();
-		$this->input   = new Input();
+		$this->input   = new CLI\Input();
 
 		if( version_compare( PHP_VERSION, $phpMinimumVersion, '>=' ) == false )
 		{
@@ -99,8 +100,8 @@ class Application
 		$this->defaultCommand = new Command\Command( 'default', 'A placeholder command', function(){ } );
 
 		/* Cookie Controller */
-		$this->cookies = new Cookie( $fileCookies );
 		$fileCookies = $this->applicationDirectory->child( '.cookies' );
+		$this->cookies = new CLI\Cookie( $fileCookies );
 	}
 
 	/**
@@ -147,6 +148,7 @@ class Application
 
 		$command->setApplicationMirror( $appMirror );
 
+		// $command->setAppDirectory( $this->applicationDirectory );
 		$command->setApplicationCommands( $this->commands );
 		$command->setApplicationExecutableOptions( $this->executableOptions );
 
