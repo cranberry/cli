@@ -158,7 +158,7 @@ class Application
 	{
 		/* Check cookies to see if cleanup has been performed for this version */
 		$versionSlug = 'v' . str_replace( '.', '_', $this->version );
-		$didPerformCleanup = $this->getCookie( 'cleanup', $versionSlug ) == true;
+		$didPerformCleanup = $this->cookies->get( 'cleanup', $versionSlug ) == true;
 
 		if( $didPerformCleanup )
 		{
@@ -190,7 +190,7 @@ class Application
 		}
 
 		/* Write to cookies file */
-		$this->setCookie( 'cleanup', $versionSlug, "true" );
+		$this->cookies->set( 'cleanup', $versionSlug, "true" );
 	}
 
 	/**
@@ -256,16 +256,6 @@ OUTPUT;
 	}
 
 	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @return	void
-	 */
-	public function deleteCookie( $section, $name )
-	{
-	   $this->cookies->delete( $section, $name );
-	}
-
-	/**
 	 * @param	string	$name
 	 * @return	string
 	 */
@@ -286,16 +276,6 @@ OUTPUT;
 		}
 
 		return $this->commands[$name];
-	}
-
-	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @return	mixed
-	 */
-	public function getCookie( $section, $name )
-	{
-		return $this->cookies->get( $section, $name );
 	}
 
 	/**
@@ -522,17 +502,6 @@ OUTPUT;
 			$this->output->line( $outputContents );
 			$this->exit = 1;
 		}
-	}
-
-	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @param	mixed	$value
-	 * @return	void
-	 */
-	public function setCookie( $section, $name, $value )
-	{
-		$this->cookies->set( $section, $name, $value );
 	}
 
 	/**
