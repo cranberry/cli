@@ -421,7 +421,7 @@ OUTPUT;
 
 					$outputContents = sprintf
 					(
-						"%s: '%s' is not a %s command. See '%s help'",
+						"%s: '%s' is not a %s command. See '%s --help'",
 						$this->name,
 						$this->input->getCommand(),
 						$this->name,
