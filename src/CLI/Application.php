@@ -298,14 +298,6 @@ OUTPUT;
 	}
 
 	/**
-	 * @return	string
-	 */
-	public function getVersion()
-	{
-		return $this->version;
-	}
-
-	/**
 	 * @param	string		$version
 	 * @param	Closure		$action
 	 * @return	void
