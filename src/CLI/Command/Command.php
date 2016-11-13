@@ -39,7 +39,7 @@ class Command
 	/**
 	 * @var	Cranberry\CLI\Cookie
 	 */
-	protected $cookies;
+	public $cookies;
 
 	/**
 	 * @var string
@@ -91,16 +91,6 @@ class Command
 	}
 
 	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @return	void
-	 */
-	public function deleteCookie( $section, $name )
-	{
-	   $this->cookies->delete( $section, $name );
-	}
-
-	/**
 	 * Return array of aliases
 	 *
 	 * @return	array
@@ -138,16 +128,6 @@ class Command
 
 		$reflect = new \ReflectionMethod($this->closure);
 		return $reflect->getClosure();
-	}
-
-	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @return	mixed
-	 */
-	public function getCookie( $section, $name )
-	{
-		return $this->cookies->get( $section, $name );
 	}
 
 	/**
@@ -343,17 +323,6 @@ class Command
 		}
 
 		throw new InvalidClosureException("Invalid closure passed for '{$this->name}'");
-	}
-
-	/**
-	 * @param	string	$section
-	 * @param	string	$name
-	 * @param	mixed	$value
-	 * @return	void
-	 */
-	public function setCookie( $section, $name, $value )
-	{
-		$this->cookies->set( $section, $name, $value );
 	}
 
 	/**
