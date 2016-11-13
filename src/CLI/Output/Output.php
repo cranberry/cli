@@ -28,7 +28,7 @@ class Output
 	 * @param	string		$url
 	 * @return	string
 	 */
-	static public function exceptionLog( \Exception $e, array $argv, $url )
+	static public function exceptionLog( \Exception $e, array $argv, $url=null )
 	{
 		$output = PHP_EOL;
 
@@ -86,7 +86,14 @@ class Output
 		}
 
 		$output .= $dividerStrong . PHP_EOL . PHP_EOL;
-		$output .= "Please submit a bug report with this error log. {$url}" . PHP_EOL . PHP_EOL;
+		if( !empty( $url ) )
+		{
+			$output .= "Please submit a bug report with this error log. {$url}" . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			$output .= "Please contact the developer of this application and include this error log." . PHP_EOL . PHP_EOL;
+		}
 
 		return $output;
 	}
