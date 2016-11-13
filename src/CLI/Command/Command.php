@@ -32,16 +32,6 @@ class Command
 	protected $appExecutableOptions=[];
 
 	/**
-	 * @var	string
-	 */
-	protected $appName;
-
-	/**
-	 * @var string
-	 */
-	protected $appVersion;
-
-	/**
 	 * @var string
 	 */
 	protected $closure;
@@ -55,16 +45,6 @@ class Command
 	 * @var string
 	 */
 	protected $description;
-
-	/**
-	 * @var	Cranberry\Core\File\Directory
-	 */
-	public $dirApp;
-
-	/**
-	 * @var	Cranberry\Core\File\Directory
-	 */
-	public $dirData;
 
 	/**
 	 * @var string
@@ -144,22 +124,6 @@ class Command
 	public function getApplicationExecutableOptions()
 	{
 		return $this->appExecutableOptions;
-	}
-
-	/**
-	 * @return	string
-	 */
-	public function getApplicationName()
-	{
-		return $this->appName;
-	}
-
-	/**
-	 * @return	string
-	 */
-	public function getApplicationVersion()
-	{
-		return $this->appVersion;
 	}
 
 	/**
@@ -324,15 +288,6 @@ class Command
 		$this->app = $appMirror;
 	}
 
-
-	/**
-	 * @param	Cranberry\Core\File\Directory	$dirApp
-	 */
-	public function setAppDirectory( File\Directory $dirApp )
-	{
-		$this->dirApp = $dirApp;
-	}
-
 	/**
 	 * @param	array	$appCommands
 	 */
@@ -399,14 +354,6 @@ class Command
 	public function setCookie( $section, $name, $value )
 	{
 		$this->cookies->set( $section, $name, $value );
-	}
-
-	/**
-	 * @param	Cranberry\Core\File\Directory	$dirData
-	 */
-	public function setDataDirectory( File\Directory $dirData )
-	{
-		$this->dirData = $dirData;
 	}
 
 	/**
