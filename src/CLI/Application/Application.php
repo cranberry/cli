@@ -499,15 +499,4 @@ OUTPUT;
 		echo $this->output->flush();
 		exit( $this->exit );
 	}
-
-	/**
-	 * @param	string	$name		Name of command to unregister
-	 */
-	public function unregisterCommand($name)
-	{
-		if(isset($this->commands[$name]))
-		{
-			unset($this->commands[$name]);
-		}
-	}
 }
