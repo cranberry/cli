@@ -388,43 +388,39 @@ OUTPUT;
 		$commandName = $this->input->getCommand();
 		$command = $this->defaultCommand;
 
-		/*
-		 * Executable options (ex., '--version')
-		 */
-		$applicationOptionValues = $this->input->getApplicationOptions();
-
-		if( count( $applicationOptionValues ) > 0 )
-		{
-			// The first option value set is our executable option candidate
-			$applicationOptionName = key( $applicationOptionValues );
-
-			if( isset( $this->executableOptions[$applicationOptionName] ) )
-			{
-				$command = $this->getExecutableOption( $applicationOptionName );
-				$command->setCommandName( $commandName );
-			}
-		}
-
-		/*
-		 * Command
-		 */
-		else
-		{
-			if( !is_null( $commandName ) )
-			{
-				$command = $this->getCommand( $commandName );
-			}
-		}
-
-		/*
-		 * Run Command
-		 */
 		try
 		{
+			/*
+			 * Executable options (ex., '--version')
+			 */
+			$applicationOptionValues = $this->input->getApplicationOptions();
+
+			if( count( $applicationOptionValues ) > 0 )
+			{
+				// The first option value set is our executable option candidate
+				$applicationOptionName = key( $applicationOptionValues );
+
+				if( isset( $this->executableOptions[$applicationOptionName] ) )
+				{
+					$command = $this->getExecutableOption( $applicationOptionName );
+					$command->setCommandName( $commandName );
+				}
+			}
+
+			/*
+			 * Command
+			 */
+			else
+			{
+				if( !is_null( $commandName ) )
+				{
+					$command = $this->getCommand( $commandName );
+				}
+			}
+
 			$this->callCommand( $command, $this->input->getCommandArguments() );
 		}
 
-		// Command not registered
 		catch( Command\InvalidCommandException $e )
 		{
 			switch($e->getCode())
