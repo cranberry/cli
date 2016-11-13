@@ -255,16 +255,6 @@ OUTPUT;
 	}
 
 	/**
-	 * Display version number
-	 *
-	 * @return	string
-	 */
-	protected function commandVersion()
-	{
-		return sprintf('%s version %s', $this->name, $this->version);
-	}
-
-	/**
 	 * @param	string	$name
 	 * @return	string
 	 */
