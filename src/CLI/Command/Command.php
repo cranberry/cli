@@ -24,11 +24,6 @@ class Command
 	/**
 	 * @var	array
 	 */
-	protected $appCommands=[];
-
-	/**
-	 * @var	array
-	 */
 	protected $appExecutableOptions=[];
 
 	/**
@@ -258,14 +253,6 @@ class Command
 	public function setApplicationMirror( $appMirror )
 	{
 		$this->app = $appMirror;
-	}
-
-	/**
-	 * @param	array	$appCommands
-	 */
-	public function setApplicationCommands( array $appCommands )
-	{
-		$this->appCommands = $appCommands;
 	}
 
 	/**
