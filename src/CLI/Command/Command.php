@@ -207,12 +207,12 @@ class Command
 	}
 
 	/**
-	 * @param	Cranberry\CLI\Cookie		$cookie
-	 * @return	void
+	 * @param	string	$name
+	 * @param	mixed	$object
 	 */
-	public function registerCookieController( Cookie $cookie )
+	public function registerObject( $name, $object )
 	{
-		$this->cookies = $cookie;
+		$this->$name = $object;
 	}
 
 	/**
@@ -232,14 +232,6 @@ class Command
 	public function registerSubcommand( Command $command )
 	{
 		$this->subcommands[$command->getName()] = $command;
-	}
-
-	/**
-	 * @param	Cranberry\CLI\Application\Mirror	$appMirror
-	 */
-	public function setApplicationMirror( $appMirror )
-	{
-		$this->app = $appMirror;
 	}
 
 	/**

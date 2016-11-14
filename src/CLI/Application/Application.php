@@ -63,6 +63,11 @@ class Application
 	protected $name;
 
 	/**
+	 * @var	array
+	 */
+	protected $commandObjects=[];
+
+	/**
 	 * @var Cranberry\CLI\Output\Output
 	 */
 	protected $output;
@@ -102,6 +107,13 @@ class Application
 		/* Cookie Controller */
 		$fileCookies = $this->applicationDirectory->child( '.cookies' );
 		$this->cookies = new CLI\Cookie( $fileCookies );
+
+		/* Application Mirror */
+		$this->appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
+
+		$this->registerCommandObject( 'app', $this->appMirror );
+		$this->registerCommandObject( 'cookies', $this->cookies );
+		$this->registerCommandObject( 'output', $this->output );
 	}
 
 	/**
@@ -142,17 +154,17 @@ class Application
 			$command->setOptionValue($key, $value);
 		}
 
-		/* App Mirror */
-		$appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
-		$appMirror->setDataDirectory( $this->dataDirectory );
-		$appMirror->registerCommands( $this->commands );
-		$appMirror->registerOptions( $this->executableOptions );
+		/*
+		 * Mirrors
+		 */
+		$this->appMirror->setDataDirectory( $this->dataDirectory );
+		$this->appMirror->registerCommands( $this->commands );
+		$this->appMirror->registerOptions( $this->executableOptions );
 
-		$command->setApplicationMirror( $appMirror );
-		$command->setOutput( $this->output );
-
-		/* Lazy-load Cookies controller */
-		$command->registerCookieController( $this->cookies );
+		foreach( $this->commandObjects as $name => $mirrorObject )
+		{
+			$command->registerObject( $name, $mirrorObject );
+		}
 
 		return call_user_func_array($command->getClosure(), $arguments);
 	}
@@ -329,6 +341,18 @@ OUTPUT;
 			{
 				$this->registerCommand( $command );
 			}
+		}
+	}
+
+	/**
+	 * @param	string	$name
+	 * @param	mixed	$object
+	 */
+	public function registerCommandObject( $name, &$object )
+	{
+		if( !isset( $this->commandObjects[$name] ) )
+		{
+			$this->commandObjects[$name] = &$object;
 		}
 	}
 
