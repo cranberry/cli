@@ -85,7 +85,7 @@ class Cookie
 
 				foreach( $contents as $name => $value )
 				{
-					$fileContents .= "{$name} = {$value}" . PHP_EOL;
+					$fileContents .= "{$name} = \"{$value}\"" . PHP_EOL;
 				}
 			}
 		}
