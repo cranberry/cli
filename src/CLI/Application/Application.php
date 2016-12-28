@@ -425,7 +425,8 @@ OUTPUT;
 				}
 			}
 
-			$this->callCommand( $command, $this->input->getCommandArguments() );
+			$outputContents = $this->callCommand( $command, $this->input->getCommandArguments() );
+			$this->output->string( $outputContents );
 		}
 
 		catch( Command\InvalidCommandException $e )
