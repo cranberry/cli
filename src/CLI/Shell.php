@@ -9,7 +9,7 @@ class Shell
 {
 	/**
 	 * Execute an external command, generate friendly output and return the result
-	 * 
+	 *
 	 * @param	string	$command
 	 * @param	boolean	$formatted	Return formatted output in addition to raw
 	 * @param	string	$prefix
@@ -28,6 +28,9 @@ class Shell
 		{
 			$output['formatted'] = '';
 			$color = $exitCode == 0 ? 'green' : 'red';
+
+			$formattedString = new Format\String;
+			$formattedString->foregroundColor( $color );
 		}
 
 		foreach( $commandOutput as $line )
@@ -36,7 +39,8 @@ class Shell
 
 			if( $formatted )
 			{
-				$output['formatted'] .= Output::colorize( $prefix . $line, $color ) . PHP_EOL;
+				$formattedString->setString( $prefix . $line );
+				$output['formatted'] .= $formattedString . PHP_EOL;
 			}
 		}
 
@@ -51,7 +55,7 @@ class Shell
 
 	/**
 	 * Gets the value of an environment variable
-	 * 
+	 *
 	 * @param	string	$varname	The variable name
 	 * @return	string
 	 */
