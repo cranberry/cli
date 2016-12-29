@@ -3,6 +3,8 @@
 All notable changes to Cranberry\CLI will be documented in this file.
 
 ## [Unreleased]
+
+## [0.1.2] - 2016-12-29
 ### Added
 - `phpMinimumVersion` property to `Application\Mirror`
 
