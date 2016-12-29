@@ -109,7 +109,7 @@ class Application
 		$this->cookies = new CLI\Cookie( $fileCookies );
 
 		/* Application Mirror */
-		$this->appMirror = new Mirror( $this->name, $this->version, $this->applicationDirectory );
+		$this->appMirror = new Mirror( $this->name, $this->version, $phpMinimumVersion, $this->applicationDirectory );
 
 		$this->registerCommandObject( 'app', $this->appMirror );
 		$this->registerCommandObject( 'cookies', $this->cookies );

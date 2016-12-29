@@ -28,6 +28,11 @@ class Mirror
 	/**
 	 * @var	string
 	 */
+	public $phpMinimumVersion;
+
+	/**
+	 * @var	string
+	 */
 	public $name;
 
 	/**
@@ -35,21 +40,22 @@ class Mirror
 	 */
 	public $options=[];
 
-
 	/**
 	 * @var	string
 	 */
 	public $version;
 
 	/**
-	 * @param	string	$name
-	 * @param	string	$version
-	 * @return	void
+	* @param	string							$name
+	* @param	string							$version
+	* @param	string							$phpMinimumVersion
+	* @param	Cranberry\Core\File\Directory	$dirApp
 	 */
-	public function __construct( $name, $version, File\Directory $applicationDirectory )
+	public function __construct( $name, $version, $phpMinimumVersion, File\Directory $applicationDirectory )
 	{
 		$this->name = $name;
 		$this->version = $version;
+		$this->phpMinimumVersion = $phpMinimumVersion;
 		$this->applicationDirectory = $applicationDirectory;
 	}
 

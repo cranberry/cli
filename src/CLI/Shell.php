@@ -33,9 +33,6 @@ class Shell
 			$formattedString->foregroundColor( $color );
 		}
 
-		$formattedString = new Format\String;
-		$formattedString->foregroundColor( $color );
-
 		foreach( $commandOutput as $line )
 		{
 			$output['raw'] .= $line . PHP_EOL;
