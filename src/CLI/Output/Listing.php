@@ -7,7 +7,7 @@ namespace Cranberry\CLI\Output;
 
 use Cranberry\CLI\Format;
 
-class Listing extends \Cranberry\CLI\Output
+class Listing extends Output
 {
 	/**
 	 * @var	array
