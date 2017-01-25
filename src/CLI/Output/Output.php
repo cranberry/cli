@@ -18,9 +18,15 @@ class Output
 	protected $cols;
 
 	/**
+	 * @var	boolean
+	 */
+	protected $passThrough=false;
+
+	/**
 	 * @var	number
 	 */
 	protected $rows;
+
 
 	/**
 	 * @param	Exception	$e
@@ -143,6 +149,18 @@ class Output
 	public function line($string='')
 	{
 		$this->buffer = $this->buffer . $string . PHP_EOL;
+		if( $this->passThrough )
+		{
+			echo $string . PHP_EOL;
+		}
+	}
+
+	/**
+	 * @param	boolean	$passThrough
+	 */
+	public function passThrough( $passThrough )
+	{
+		$this->passThrough = ($passThrough == true);
 	}
 
 	/**
@@ -169,6 +187,10 @@ class Output
 	public function string($string)
 	{
 		$this->buffer .= $string;
+		if( $this->passThrough )
+		{
+			echo $string;
+		}
 	}
 
 	/**
@@ -312,5 +334,10 @@ class Output
 		}
 
 		$this->buffer .= $buffer;
+
+		if( $this->passThrough )
+		{
+			echo $buffer;
+		}
 	}
 }
