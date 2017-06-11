@@ -3,9 +3,9 @@
 /*
  * This file is part of Cranberry\CLI
  */
-namespace Cranberry\CLI\Format;
+namespace Cranberry\CLI\Output;
 
-class String
+class FormattedString
 {
 	/**
 	 * @var	string

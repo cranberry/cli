@@ -29,7 +29,7 @@ class Shell
 			$output['formatted'] = '';
 			$color = $exitCode == 0 ? 'green' : 'red';
 
-			$formattedString = new Format\String;
+			$formattedString = new Output\FormattedString;
 			$formattedString->foregroundColor( $color );
 		}
 

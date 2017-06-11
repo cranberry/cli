@@ -5,7 +5,7 @@
  */
 namespace Cranberry\CLI;
 
-use Cranberry\CLI\Format\String;
+use Cranberry\CLI\Output\FormattedString;
 
 class Input
 {
@@ -177,7 +177,7 @@ class Input
 	 */
 	static public function prompt( $prompt, $required=false )
 	{
-		$promptString = new String( $prompt );
+		$promptString = new FormattedString( $prompt );
 
 		$output = sprintf(
 			'%s ',
