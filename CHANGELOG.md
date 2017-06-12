@@ -3,10 +3,13 @@
 All notable changes to Cranberry\CLI will be documented in this file.
 
 ## [Unreleased]
+
+## [0.1.4] - 2017-06-12
 ### Added
 - Pass-through support to core `Output\Output` commands
 
 ### Changed
+- Renamed `Format\String` to `Output\FormattedString`
 - Updated to `Cranberry\Core` **v0.1.3**
 
 ## [0.1.3] - 2016-12-31
