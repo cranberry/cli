@@ -34,7 +34,7 @@ class Listing extends Output
 		$maxLength = 0;
 		foreach( $this->items as $item )
 		{
-			$itemLength = $item instanceof Output\FormattedString ? $item->length() : strlen( $item );
+			$itemLength = $item instanceof FormattedString ? $item->length() : strlen( $item );
 
 			if( $itemLength >  $maxLength )
 			{
@@ -63,7 +63,7 @@ class Listing extends Output
 				if( isset( $this->items[$index] ) )
 				{
 					$item = $this->items[$index];
-					$itemLength = $item instanceof Output\FormattedString ? $item->length() : strlen( $item );
+					$itemLength = $item instanceof FormattedString ? $item->length() : strlen( $item );
 
 					$line .= $item;
 

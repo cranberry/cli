@@ -3,6 +3,8 @@
 All notable changes to Cranberry\CLI will be documented in this file.
 
 ## [Unreleased]
+### Fixed
+- Additional fixes to incorrect namespacing in `Output\Listing`
 
 ## [0.1.4] - 2017-06-12
 ### Added
